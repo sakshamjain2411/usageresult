@@ -125,10 +125,6 @@
     },
     "config": {
       "fullWidth": true
-    },
-    "sap.cloud": {
-      "public": true,
-      "service": "upgradesresult"
     }
   },
   "sap.cloud": {
