@@ -1,0 +1,432 @@
+<mvc:View class="levelView" controllerName="usageresult.controller.Level" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout"
+	xmlns:com="sap.suite.ui.commons" xmlns:mc="sap.suite.ui.microchart" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:c="sap.ui.core" xmlns:viz.data="sap.viz.ui5.data" xmlns:tnt="sap.tnt" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:viz="sap.viz.ui5.controls" xmlns:f="sap.f" xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:u="sap.ui.unified"
+	xmlns:html="http://www.w3.org/1999/xhtml" displayBlock="true">
+	<f:DynamicPage id="dynamicPageId" class="dynamicPageId" headerExpanded="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<m:Text text="Best Practices Usage Dashboard"></m:Text>
+				</f:heading>
+			</f:DynamicPageTitle> 
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader class="dynamicPageHeader" pinnable="true">
+				<f:content>
+					<fb:FilterBar reset="onReset" class="dynamicPageFilterBar" useToolbar="false" showGoOnFB="false">
+						<fb:filterItems>
+							<fb:FilterItem name="A" label="Version">
+								<fb:control>
+									<!--<m:ComboBox id="ddlVersion" class="ddlVersion" items="{path:'/stlist'}" change="ddlVersionChanged" selectedKey="Version">-->
+									<!--	<c:ListItem key="{versionPara}" text="{version}"/>-->
+									<!--</m:ComboBox>-->
+									<m:Select id="ddlVersion" class="ddlVersion" items="{path:'/stlist'}" change="ddlVersionChanged" selectedKey="Version">
+										<c:ListItem key="{versionPara}" text="{version}"/>
+									</m:Select> 
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="B" label="Date Range">
+								<fb:control>
+									<m:DateRangeSelection id="dateviewrange" class="DRS2" delimiter="{path:'dateModel>/delimiterDRS1'}"
+										dateValue="{path:'dateModel>/dateValueDRS1'}" secondDateValue="{path:'dateModel>/secondDateValueDRS1'}"
+										displayFormat="{path:'dateModel>/dateFormatDRS1'}" change="UpdateDateRange"
+										valueStateText="Selected Date Range cannont be greater than Current Date."/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="C" label="Time Segments">
+								<fb:control>
+									<m:SegmentedButton id="dateview" class="segmentedDate" selectedButton="btn1Month">
+										<m:Button id="btn1Day" text="1D" press="UpdateGUIGraphsdate"/>
+										<m:Button id="btn1Month" text="1M" press="UpdateGUIGraphsdate"/>
+										<m:Button id="btn3Month" text="3M" press="UpdateGUIGraphsdate"/>
+										<m:Button id="btn6Month" text="6M" press="UpdateGUIGraphsdate"/>
+										<m:Button id="btn1Year" text="1Y" press="UpdateGUIGraphsdate"/>
+										<m:Button id="btn2Year" text="All" press="UpdateGUIGraphsdate"/>
+									</m:SegmentedButton>
+								</fb:control>
+							</fb:FilterItem>
+							
+							<fb:FilterItem name="D" label="Product">
+								<fb:control>
+									<!--<m:ComboBox id="ddlProd" class="ddlVersion" enabled="false" selectedKey="EC">-->
+									<!--	<c:ListItem key="EC" text="Employee Central"/>-->
+									<!--</m:ComboBox>-->
+									<m:Select id="ddlProd" class="ddlVersion" selectedKey="All" change="ddlProductChanged">
+										<c:ListItem key="All" text="All"/>
+										<c:ListItem key="EC" text="Employee Central"/>
+										<c:ListItem key="RM" id="RM" text="Recruiting Management"/>
+										<c:ListItem key="SM" id="SM" text="Succession Management"/>
+										<c:ListItem key="PG" id="PG" text="Performance and Goals"/>
+										<c:ListItem key="CO" id="CO" text="Compensation"/>
+										<c:ListItem key="ON" id="ON" text="Onboarding"/>
+									</m:Select>
+								</fb:control>
+							</fb:FilterItem>
+							
+							<fb:FilterItem name="E" label="Scope Applied">
+								<fb:control>
+									<!--<m:ComboBox id="ddlProd" class="ddlVersion" enabled="false" selectedKey="EC">-->
+									<!--	<c:ListItem key="EC" text="Employee Central"/>-->
+									<!--</m:ComboBox>-->
+									<m:Select id="ddlDeploy" class="ddlVersion" selectedKey="BP" change="ddlDeployChanged">
+										<c:ListItem key="All" text="All"/>
+										<c:ListItem key="BP" text="Best Practices"/>
+										<c:ListItem key="CUST" text="Partner"/>
+									</m:Select>
+								</fb:control>
+							</fb:FilterItem>
+							
+						</fb:filterItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<!--<Table-->
+			<!--	rows="{/ProductCollection}"-->
+			<!--	title="Products"-->
+			<!--	selectionMode="MultiToggle"-->
+			<!--	visibleRowCount="7">-->
+			<!--	<columns>-->
+			<!--		<Column width="6rem">-->
+			<!--			<m:Label text="Id" />-->
+			<!--			<template>-->
+			<!--				<m:Input value="{ProductId}"/>-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="11rem" hAlign="End">-->
+			<!--			<m:Label text="Upgrade Element" />-->
+			<!--			<template>-->
+			<!--				<m:Label text="{Quantity}" />-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="9rem">-->
+			<!--			<m:Label text="Customer Name" />-->
+			<!--			<template>-->
+			<!--				<m:ObjectStatus text="{Status}" state="{-->
+			<!--					path: 'Available',-->
+			<!--					formatter: '.formatAvailableToObjectState'-->
+			<!--				}"/>-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="9rem">-->
+			<!--			<m:Label text="Result" />-->
+			<!--			<template>-->
+			<!--				<u:Currency value="{Price}" currency="{CurrencyCode}"/>-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="12rem">-->
+			<!--			<m:Label text="User" />-->
+			<!--			<template>-->
+			<!--				<m:ComboBox value="{SupplierName}" items="{/Suppliers}">-->
+			<!--					<c:Item text="{Name}"/>-->
+			<!--				</m:ComboBox>-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="9rem">-->
+			<!--			<m:Label text="Email" />-->
+			<!--			<template>-->
+			<!--				<m:Link text="Show Image" href="{ProductPicUrl}" target="_blank"/>-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="9rem">-->
+			<!--			<m:Label text="Log" />-->
+			<!--			<template>-->
+			<!--				<m:Button text="Show Details" press="handleDetailsPress"/>-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="11rem">-->
+			<!--			<m:Label text="Migration" />-->
+			<!--			<template>-->
+			<!--				<m:Text text="{Name}" wrapping="false" />-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="11rem">-->
+			<!--			<m:Label text="Time Stamp" />-->
+			<!--			<template>-->
+			<!--				<m:Text text="{Name}" wrapping="false" />-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="11rem">-->
+			<!--			<m:Label text="Company Schema" />-->
+			<!--			<template>-->
+			<!--				<m:Text text="{Name}" wrapping="false" />-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="11rem">-->
+			<!--			<m:Label text="Release Version" />-->
+			<!--			<template>-->
+			<!--				<m:Text text="{Name}" wrapping="false" />-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--		<Column width="11rem">-->
+			<!--			<m:Label text="User" />-->
+			<!--			<template>-->
+			<!--				<m:Text text="{Name}" wrapping="false" />-->
+			<!--			</template>-->
+			<!--		</Column>-->
+			<!--<Column width="7rem">-->
+			<!--	<m:Label text="Heavy Weight" />-->
+			<!--	<template>-->
+			<!--		<m:CheckBox selected="{-->
+			<!--			path: 'Heavy',-->
+			<!--			type: 'sap.ui.model.type.String'-->
+			<!--		}"/>-->
+			<!--	</template>-->
+			<!--</Column>-->
+			<!--<Column width="12rem">-->
+			<!--	<m:Label text="Category" />-->
+			<!--	<template>-->
+			<!--		<m:Select selectedKey="{Category}" items="{/Categories}">-->
+			<!--			<c:Item text="{Name}" key="{Name}"/>-->
+			<!--		</m:Select>-->
+			<!--	</template>-->
+			<!--</Column>-->
+			<!--<Column width="6rem" hAlign="Center">-->
+			<!--	<m:Label text="Status" />-->
+			<!--	<template>-->
+			<!--		<c:Icon src="{-->
+			<!--			path: 'Available',-->
+			<!--			formatter: '.formatAvailableToIcon'-->
+			<!--		}"/>-->
+			<!--	</template>-->
+			<!--</Column>-->
+			<!--<Column width="11rem" hAlign="Center">-->
+			<!--	<m:Label text="Delivery Date" />-->
+			<!--	<template>-->
+			<!--		<m:DatePicker value="{-->
+			<!--			path: 'DeliveryDate',-->
+			<!--			type: 'sap.ui.model.type.Date',-->
+			<!--			formatOptions: {source: {pattern: 'timestamp'}}-->
+			<!--		}"/>-->
+			<!--	</template>-->
+			<!--</Column>-->
+			<!--	</columns>-->
+			<!--</Table>-->
+			<!--<m:HBox class="parentHBoxTable">-->
+				
+				<m:VBox class="tableVBox">
+					<m:Panel expandable="true" expanded="false" expand="chkPnlExpand" headerText="Key KPIs" width="auto" class="panelTable">
+						<m:content>
+							<m:HBox class="tileVBox">
+								<m:GenericTile size="M" header="Customers" class="BQDrillSub" frameType="TwoByOne">
+								<m:tileContent>
+									<m:TileContent footer="" unit="">
+										<m:content>
+											<!--<mc:RadialMicroChart id="radialMicroChartCust" percentage="" valueColor=""/>-->
+											<m:Text text="" class="totalCountPos" id="totalCustCount"></m:Text>
+										</m:content>
+									</m:TileContent>
+									
+									<m:TileContent footer="" class="TableTileContentRight displyZeroParent" unit="">
+										<m:content>
+											<mc:ComparisonMicroChart id="CustTileChart"
+												class="SentimentTileChart displyZero" size="L">
+												<mc:data>
+													<mc:ComparisonMicroChartData
+														title="Total Customers" id="noCustValSub" class="hide" value="" displayValue="" color="Critical"></mc:ComparisonMicroChartData>
+													<mc:ComparisonMicroChartData
+														title="Unique Customers" id="noCustValSubNUique" value="" displayValue="" color="Good"></mc:ComparisonMicroChartData>
+													<mc:ComparisonMicroChartData
+														title="Existing Customers" id="noCustValSubExist" value="" displayValue="" color="Critical"></mc:ComparisonMicroChartData>
+												</mc:data>
+											</mc:ComparisonMicroChart>
+										</m:content>
+									</m:TileContent>
+								</m:tileContent>
+							</m:GenericTile>
+								<m:GenericTile size="M" header="Upgrade Actions" class="BQDrillSub" frameType="TwoByOne">
+								<m:tileContent>
+									<m:TileContent id="tc" footer="" unit="">
+										<!--<m:content>-->
+										<!--	<mc:RadialMicroChart id="radialMicroChartUpgrade" percentage="" valueColor=""/>-->
+										<!--</m:content>-->
+									</m:TileContent>
+									
+									<m:TileContent footer="" class="TableTileContentRight" unit="">
+										<m:content>
+											<mc:ComparisonMicroChart id="SentimentTileChart"
+												class="SentimentTileChart" size="L">
+												<mc:data>
+													<mc:ComparisonMicroChartData
+														title="Number of Upgrades" id="noUpgradeValSub" value="" displayValue="" color="Critical"></mc:ComparisonMicroChartData>
+													<mc:ComparisonMicroChartData
+														title="Number of Success" id="noSuccessValSub" value="" displayValue="" color="Good"></mc:ComparisonMicroChartData>
+													<mc:ComparisonMicroChartData
+														title="Number of Failure" id="noFailValSub" value="" displayValue="" color="Error"></mc:ComparisonMicroChartData>
+												</mc:data>
+											</mc:ComparisonMicroChart>
+										</m:content>
+									</m:TileContent>
+								</m:tileContent>
+							</m:GenericTile>
+							
+								<m:GenericTile size="M" header="Error Categorization" class="pickListTile" frameType="TwoByOne">
+									<m:tileContent>
+										<m:TileContent footer="" unit="">
+											<m:content>
+												<!--<mc:RadialMicroChart id="radialMicroChartError" percentage="" valueColor=""/>-->
+												<c:HTML id="repoContReviewError" content='&lt;div id=&quot;repoContainerReviewError&quot;&gt;&lt;/div&gt;'></c:HTML>
+											</m:content>
+										</m:TileContent>
+									</m:tileContent>
+								</m:GenericTile>
+							
+							</m:HBox>
+						</m:content>
+					</m:Panel>
+					
+					<m:Table class="tableUp" showNoData="false">
+						<m:headerToolbar>
+							<m:OverflowToolbar class="tableBar">
+								<m:Title class="textColor" text="Upgrade Center Action Result" level="H2"/>
+								<m:ToolbarSpacer/>
+								<m:SearchField liveChange="onSearch" width="25%" id="searchfield" class="searchfield" placeholder="Search Customers"/>
+								<m:Button tooltip="View Settings" icon="sap-icon://drop-down-list" class="exportView" press="handleViewSettingsDialogButtonPressed"/>
+								<m:Button icon="sap-icon://download" class="export" press="onExport"/>
+								<!--<m:ToolbarSpacer/>-->
+								<!--<m:CheckBox text="Enable Personalization Grouping" select="onTableGrouping" />-->
+								<!--<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed" >-->
+								<!--</m:Button>-->
+							</m:OverflowToolbar>
+						</m:headerToolbar>
+						<m:columns>
+							<m:Column minScreenWidth=""  width="11%" demandPopin="false" mergeDuplicates="true">
+								<m:Label class="textColor" text="Customer Name"/>
+							</m:Column>
+							<m:Column minScreenWidth=""  width="12%" demandPopin="false">
+								<m:Label class="textColor" text="Upgrade Element"/>
+							</m:Column>
+							<m:Column minScreenWidth="" width="9%" demandPopin="false">
+								<m:Label class="textColor" text="Environment"/>
+							</m:Column>
+							<m:Column minScreenWidth="" width="10%" demandPopin="false">
+								<m:Label class="textColor" text="Time Stamp"/>
+							</m:Column>
+							<m:Column minScreenWidth="" width="5%" demandPopin="false">
+								<m:Label class="textColor" text="Result"/>
+							</m:Column>
+							<m:Column minScreenWidth="" width="10%" demandPopin="false">
+								<m:Label class="textColor" text="Error Categorization"/>
+							</m:Column>
+							<m:Column minScreenWidth=""  width="5%" demandPopin="false">
+								<m:Label class="textColor" text="Log"/>
+							</m:Column>
+							
+							<m:Column minScreenWidth=""  width="6%" demandPopin="false">
+								<m:Label class="textColor" text="Sol. Provided"/>
+							</m:Column>
+							
+							<m:Column minScreenWidth="" width="6%" demandPopin="false">
+								<m:Label class="textColor" text="Company ID"/>
+							</m:Column>
+							
+							<m:Column minScreenWidth=""  width="6%" demandPopin="false">
+								<m:Label class="textColor" text="Migration"/>
+							</m:Column>
+							<m:Column minScreenWidth="" width="6%" demandPopin="false">
+								<m:Label class="textColor" text="Release Ver."/>
+							</m:Column>
+							
+							<m:Column minScreenWidth="" width="6%" demandPopin="false">
+								<m:Label class="textColor" text="User"/>
+							</m:Column>
+							
+							<m:Column minScreenWidth="" width="8%" demandPopin="false">
+								<m:Label class="textColor" text="Email"/>
+							</m:Column>
+							
+							
+						</m:columns>
+					</m:Table>
+					<m:ScrollContainer id="tableScBtm" class="tableScBtm" width="100%" height="" horizontal="false" vertical="true">
+						<m:Table noDataText="Loading..." id="listTableBtm" inset="false" class="tableDown" items="{path: '/stlistUser'}" growing="true" growingThreshold="10">
+							<m:columns>
+								<m:Column minScreenWidth=""  width="11%" demandPopin="false" mergeDuplicates="true"></m:Column>
+								<m:Column minScreenWidth=""  width="12%" demandPopin="false"></m:Column>
+								<m:Column minScreenWidth=""  width="9%" demandPopin="false"></m:Column>
+								<m:Column minScreenWidth=""  width="10%" demandPopin="false"></m:Column>
+								<m:Column minScreenWidth=""  width="6%" demandPopin="false"></m:Column>
+								
+								<m:Column minScreenWidth=""  width="8%" demandPopin="false"></m:Column>
+								<m:Column minScreenWidth="" width="8%" demandPopin="false"></m:Column>
+								
+								<m:Column minScreenWidth="" width="4%" demandPopin="false"></m:Column>
+								
+								<m:Column minScreenWidth=""  width="7%" demandPopin="false"></m:Column>
+								
+								<m:Column minScreenWidth=""  width="6%" demandPopin="false"></m:Column>
+								<m:Column minScreenWidth=""  width="5%" demandPopin="false"></m:Column>
+							
+								
+								<m:Column minScreenWidth=""  width="6%" demandPopin="false"></m:Column>
+								<m:Column minScreenWidth=""  width="9%" demandPopin="false" ></m:Column>
+								
+							
+							</m:columns>
+							<m:items>
+								<m:ColumnListItem vAlign="Middle" >
+									<m:cells>
+										<!--<m:Text text="{company}"></m:Text>-->
+										<!--<m:ToggleButton text="{company}" class="chkTBtn" press="onPressCompany"></m:ToggleButton>-->
+										<m:ToggleButton text="{path:'company',formatter: '.defaultname' }" class="chkTBtn" press="onPressCompany">
+											<m:customData>
+												<c:CustomData key="target" value="{company}"/>
+											</m:customData>
+										</m:ToggleButton>
+										
+										
+										<m:Text text="{upgrade}"></m:Text>
+										<m:Text text="{env}"></m:Text>
+										<m:Text text="{puretimestamp}"></m:Text>
+										<m:Text visible="{path:'result',formatter:'.setCustomClassForSAPUI5ImageControl'}" text="{result}"></m:Text>
+										<!--<m:Text text="{result}"></m:Text>-->
+										
+										<m:Text text="{catg}"></m:Text>
+										<m:HBox class="logHBoxPos">
+											<!--<m:Text class="hide" text="{log}"></m:Text>-->
+											<m:Text class="hide" text="{rsn}"></m:Text>
+											<m:Text class="hide" text="{sol}"></m:Text>
+											<m:Text class="hide" text="{email}"></m:Text>
+											
+											<m:Button icon="sap-icon://display" class="logView" press="handleLinkView">
+												<m:customData>
+													<c:CustomData key="target" value="{log}"/>
+												</m:customData>
+											</m:Button>
+											<m:Button icon="sap-icon://share-2" enabled="{path:'result',formatter:'.setCustomClassForSAPUI5ImageControlVisibility'}" class="logEmail" press="handleLinkEmail">
+												<m:customData>
+													<c:CustomData key="target" value="{log}"/>
+												</m:customData>
+											</m:Button>
+											
+										</m:HBox>
+										
+										<!-- <m:Link text="{path:'errorlog', formatter:'.setCustomClassForSolution'}"></m:Link> -->
+										<m:Link enabled="{path:'errorlog',formatter:'.setCustomEnableForSolution'}" visible="{path:'errorlog',formatter:'.setCustomClassForSolution'}" text="{errorlog}" press="showErrorLogDetails">
+											<m:customData>
+												<c:CustomData key="target" value="{errorlogdetails}"/>
+											</m:customData>
+										</m:Link>
+										
+										<m:Text text="{id}"></m:Text>
+											
+										<m:Text text="{mig}"></m:Text>
+										<m:Text text="{fversion}"></m:Text>
+									
+										
+										<m:Text text="{user}"></m:Text>
+										<m:Text text="{email}" ></m:Text>
+									
+										
+									</m:cells>
+								</m:ColumnListItem>
+							</m:items>
+						</m:Table>
+					</m:ScrollContainer>
+				</m:VBox>
+			<!--</m:HBox>-->
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

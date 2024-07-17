@@ -1,0 +1,29 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<!--<Dialog showHeader="true" title="Please Confirm!" class="carryDialog" draggable= "true" resizable= "true">-->
+	<!--	<content>-->
+	<!--		<Text class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd" text="Detailed Log will be shared as an email.">-->
+	<!--		</Text>-->
+	<!--	</content>-->
+	<!--	<beginButton>-->
+	<!--		<Button text="Ok" class="stdBtnClr" press="onOkPressDialogConfirm"/>-->
+	<!--	</beginButton>-->
+	<!--	<endButton>-->
+	<!--		<Button text="Close" class="stdBtnClr" press="onClosePressDialogConfirm"/>-->
+	<!--	</endButton>-->
+	<!--</Dialog>-->
+	<Popover
+		title="Email"
+		class="sharePopOver"
+		placement="Right">
+		<VBox class="VboxShare">
+			<Button text="Internal" width="150px" class="btnShare" icon="sap-icon://action" press="internalShare">
+				
+			</Button>
+			<Button text="External" width="150px" class="btnShare" icon="sap-icon://action" press="externalShare">
+				
+			</Button>
+		</VBox>
+	</Popover>
+</core:FragmentDefinition>

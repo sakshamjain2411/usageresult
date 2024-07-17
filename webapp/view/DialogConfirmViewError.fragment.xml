@@ -1,0 +1,11 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Dialog stretch="true" showHeader="true" title="Solution Provided" class="carryDialogView" >
+		<content>
+		</content>
+		<beginButton>
+			<Button text="Close" class="stdBtnClr" press="onOkPressDialogConfirmViewError"/>
+		</beginButton>
+	</Dialog>
+</core:FragmentDefinition>
