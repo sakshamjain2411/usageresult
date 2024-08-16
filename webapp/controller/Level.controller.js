@@ -8,30 +8,15 @@ sap.ui.define([
 	'sap/ui/model/Sorter',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/export/Spreadsheet',
-	"../model/Formatter"
-], function(jQuery, TablePersoController, Fragment, Controller, DemoPersoService, Filter, Sorter, JSONModel, Spreadsheet, Formatter) {
+], function(jQuery, TablePersoController, Fragment, Controller, DemoPersoService, Filter, Sorter, JSONModel, Spreadsheet) {
 	// "use strict";
 
 	return Controller.extend("usageresult.controller.Level", {
-		formatter: Formatter,
-		onInit: function() {
-			setInterval(function() {
-
-					if (window.location.href.split("siteId=")[1] == "146d771f-cf10-4920-9a7d-b31972423c89#Shell-home") {
-						// if (self.stat == true) {} else {
-						// 	jQuery.sap.includeStyleSheet("../../../../sap/fiori/zmpsaleschips/WebContent/tiles/Lpcust.css", "CUST");
-						// }
-						// self.stat = true;
-						$(".sapUshellHeadTitle").text("Home");
-					} else {
-						// if (self.stat == false) {} else {
-						// 	jQuery.sap.includeStyleSheet("../../../../sap/fiori/zmpsaleschips/WebContent/tiles/Lpcust2.css", "CUST");
-						// }
-						// self.stat = false;
-
-						$(".sapUshellHeadTitle").text("Best Practices Usage Dashboard");
-					}
-				}, 100);
+		onInit: async function() {
+			if(sap.ushell.Container) {
+				var userInfo = sap.ushell.Container.getService("UserInfo");
+				var email = userInfo.getEmail();
+			}
 		},
 		
 		_oDialog: null,
@@ -3298,8 +3283,7 @@ var oModelVersion = new sap.ui.model.json.JSONModel();
 							r: 0.7
 						},
 						stops: [
-							[0, color],
-							[1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+							[0, color] // darken
 						]
 					};
 				})

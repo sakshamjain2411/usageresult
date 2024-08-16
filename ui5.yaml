@@ -16,10 +16,10 @@ server:
             - /test-resources
           url: https://ui5.sap.com
         backend:
-          - path: /sap/sfsf_repo/service/errorDetails.xsodata/
+          - path: /sap/sfsf_repo/service/errorDetails.xsodata
             url: https://xs01sakp.us1.hana.ondemand.com
             destination: UCReport_BAS_Error_Details
-          - path: /sap
+          - path: /sap/sfsf_repo/service/services.xsodata
             url: https://xs01sakp.us1.hana.ondemand.com
             destination: UCReport_BAS
     - name: fiori-tools-appreload

@@ -3,17 +3,17 @@
   "authenticationMethod": "route",
   "routes": [
     {
-      "source": "^/sap/sfsf_repo/service/errorDetails.xsodata/.*/(.*)$",
-      "target": "/$1",
-      "destination": "UCReport_BAS_Error_Details",
-      "authenticationType": "none",
+      "source": "^/sap/sfsf_repo/service/services.xsodata/(.*)$",
+      "target": "$1",
+      "destination": "UCReport_BAS",
+      "authenticationType": "xsuaa",
       "csrfProtection": false
     },
     {
-      "source": "^/sap/.*/(.*)$",
-      "target": "/$1",
-      "destination": "UCReport_BAS",
-      "authenticationType": "none",
+      "source": "^/sap/sfsf_repo/service/errorDetails.xsodata/(.*)$",
+      "target": "$1",
+      "destination": "UCReport_BAS_Error_Details",
+      "authenticationType": "xsuaa",
       "csrfProtection": false
     },
     {
