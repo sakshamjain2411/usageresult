@@ -22,6 +22,9 @@ server:
           - path: /sap/sfsf_repo/service/services.xsodata
             url: https://xs01sakp.us1.hana.ondemand.com
             destination: UCReport_BAS
+          - path: /odata/v4/report
+            url: https://pacman-analyticsdashboard-d5cbwzif-dev-upgrade-elements13456da9.cfapps.eu11.hana.ondemand.com
+            destination: Upgrade-Elements-Destination
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

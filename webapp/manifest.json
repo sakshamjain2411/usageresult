@@ -26,6 +26,10 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "upgradeElements": {
+        "uri": "/odata/v4/report/",
+        "type": "OData"
       }
     },
     "crossNavigation": {
